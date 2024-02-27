@@ -12,5 +12,7 @@ public interface LocationRepository extends JpaRepository<Location, Integer>, Jp
 	
 	public Location findByLocationId(int locationId);
 	
-	public List<Location> findByLocationNameContainingIgnoreCaseAndStatus(String locationName, int status);
+	//Admin
+	public List<Location> findByLocationNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseAndStatus(String locationName, String description, int status);
+
 }

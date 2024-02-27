@@ -14,4 +14,5 @@ public interface RoleRepository extends JpaRepository<Role, Integer>, JpaSpecifi
 	
 	//Combined Query
 	public List<Role> findByNameContainingIgnoreCaseAndStatus(String name, Integer status);
+
 }

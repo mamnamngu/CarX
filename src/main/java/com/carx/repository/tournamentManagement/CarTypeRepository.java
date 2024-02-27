@@ -12,6 +12,7 @@ public interface CarTypeRepository extends JpaRepository<CarType, Integer>, JpaS
 	
 	public CarType findByCarTypeId(int carTypeId);
 	
-	//Guest
-	public List<CarType> findByNameContainingIgnoreCaseAndStatus(String name, int status);
+	//Admin
+	public List<CarType> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseAndStatus(String name, String description, int status);
+
 }

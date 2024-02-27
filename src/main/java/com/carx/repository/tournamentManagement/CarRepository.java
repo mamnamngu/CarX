@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import com.carx.entity.schoolManagement.Student;
 import com.carx.entity.tournamentManagement.Car;
 
 @Repository
@@ -16,10 +14,12 @@ public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificatio
 	public Car findByCarId(long carId);
 	
 	//Combined query
-	@Query("SELECT e FROM CarInRace e WHERE " +
-	           "(:teamId IS NULL OR e.teamId = :teamId) AND " +
-	           "(:raceId IS NULL OR e.raceId = :raceId) AND " +
-	           "e.score BETWEEN :lower AND :upper AND " +
-	           "(:status IS NULL OR e.status = :status)")
-	public List<Student> findByNameAndSchoolIdAndStatus(@Param("teamId") String teamId, @Param("lower") int lower, @Param("upper") int upper, @Param("status") int status);
+	@Query("SELECT e FROM Car e WHERE " +
+           "(:teamId IS NULL OR e.teamId = :teamId) AND " +
+           "(:carTypeId IS NULL OR e.carTypeId = :carTypeId) AND " +
+           "((:carName IS NULL OR LOWER(e.carName) LIKE '%:carName%') OR " +
+           "(:description IS NULL OR LOWER(e.description) LIKE '%:description%')) AND " +
+           "(:status IS NULL OR e.status = :status)")
+	public List<Car> findByCombinedQuery(@Param("teamId") Long teamId, @Param("carTypeId") Integer carTypeId, @Param("carName") String carName, @Param("description") String description, @Param("status") Integer status);
+
 }

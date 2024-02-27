@@ -15,8 +15,6 @@ import javax.persistence.Table;
 
 import com.carx.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -43,11 +41,11 @@ public class Account implements Serializable{
 	private long accountId;
 	
 	@Column(name = "username", nullable = false, unique = true)
-	@Size(min = Constants.USERNAME_MIN_LENGTH, message = "username must have at least 6 characters")
+	@javax.validation.constraints.Size(min = Constants.USERNAME_MIN_LENGTH, message = "username must have at least 6 characters")
 	private String username;
 	
 	@Column(name = "password", nullable = false)
-	@Size(min = Constants.PASSWORD_MIN_LENGTH, message = "password must have at least 6 characters")
+	@javax.validation.constraints.Size(min = Constants.PASSWORD_MIN_LENGTH, message = "password must have at least 6 characters")
 	private String password;
 	
 	@Column(name = "createDate", nullable = false)

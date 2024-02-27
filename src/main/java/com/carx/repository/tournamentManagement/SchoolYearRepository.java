@@ -16,5 +16,6 @@ public interface SchoolYearRepository extends JpaRepository<SchoolYear, Integer>
 	public List<SchoolYear> findByStatusNot(int status);
 	
 	//Admin
-	public List<SchoolYear> findByDescriptionContainingIgnoreCase(String description);
+	public List<SchoolYear> findByDescriptionContainingIgnoreCaseAndStatus(String description, int status);
+
 }

@@ -10,7 +10,7 @@ import com.carx.entity.authentication.Account;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long>, JpaSpecificationExecutor<Account>{
 	
-	public Account findByAccountId(int accountId);
+	public Account findByAccountId(long accountId);
 	
 	//Forgot password
 	public Account findByUsernameAndStatusNot(String username, int status);

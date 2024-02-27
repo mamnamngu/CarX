@@ -12,19 +12,14 @@ import com.carx.entity.schoolManagement.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpecificationExecutor<Student>{
 	
-	public Student findById(long studentId);
+	public Student findByStudentId(long studentId);
 	
-	//SCHOOL ASSISTANT
-	//Status is not deleted
-	public List<Student> findBySchoolSchoolIdAndStatusNot(long schoolId, int status);
-	
-	public List<Student> findByNameContainingIgnoreCaseAndStatusNot(String name, int status);
-	
-	//ADMIN
+	//ADMIN + SCHOOL ASSISTANT
 	//Combined filter
 	@Query("SELECT e FROM Student e WHERE " +
-	           "(:name IS NULL OR e.name = :name) AND " +
-	           "(:schoolId IS NULL OR e.schoolId = :schoolId) AND " +
-	           "(:status IS NULL OR e.status = :status)")
-	public List<Student> findByNameAndSchoolIdAndStatus(@Param("name") String name, @Param("schoolId") String schoolId, @Param("status") int status);
+           "(:name IS NULL OR LOWER(e.name) LIKE '%:name%') AND " +
+           "(:schoolId IS NULL OR e.schoolId = :schoolId) AND " +
+           "(:status IS NULL OR e.status = :status)")
+	public List<Student> findByNameAndSchoolIdAndStatus(@Param("name") String name, @Param("schoolId") Integer schoolId, @Param("status") Integer status);
+
 }

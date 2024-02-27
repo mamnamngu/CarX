@@ -19,7 +19,6 @@ public class RoleService {
 		return roleRepo.findAll();
 	}
 	
-	
 	public Role findById(int id) {
 		Role role = roleRepo.findByRoleId(id);
 		return role;
@@ -28,7 +27,9 @@ public class RoleService {
 	//Admin filter
 	public List<Role> findByCombinedQuery(String name, Integer status) {
 		if(name == null) name = "";
-		if(status == null) status = 0;
+		else name = name.toLowerCase();
+		
+		if(status == null) status = Constants.DEFAULT_STATUS;
 		return roleRepo.findByNameContainingIgnoreCaseAndStatus(name, status);
 	}
 	

@@ -20,7 +20,7 @@ public class AccountService {
 		return accountRepo.findAll();
 	}
 	
-	public Account findById(int id) {
+	public Account findById(long id) {
 		Account account = accountRepo.findByAccountId(id);
 		return account;
 	}
@@ -37,8 +37,8 @@ public class AccountService {
 	
 	//Admin filter
 	public List<Account> findByCombinedQuery(Integer roleId, Integer status) {
-		if(roleId == null) roleId = 1;
-		if(status == null) status = 0;
+		if(roleId == null) roleId = Constants.DEFAULT_ROLE;
+		if(status == null) status = Constants.DEFAULT_STATUS;
 		return accountRepo.findByRoleRoleIdAndStatus(roleId, status);
 	}
 	
@@ -54,7 +54,7 @@ public class AccountService {
 	}
 	
 	//DELETE - DEACTIVATE
-	public boolean delete(int id) {
+	public boolean delete(long id) {
 		Account account = findById(id);
 		if(account == null) return false;
 		account.setStatus(Constants.DEFAULT_STATUS);

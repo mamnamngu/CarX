@@ -13,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.validation.constraints.Size;
-
 import com.carx.entity.schoolManagement.Team;
 import com.carx.utilities.Constants;
 
@@ -56,7 +54,7 @@ public class CarInRace implements Serializable{
 	private int penalty;
 	
 	@Column(name = "score", nullable = false)
-	@Size(min = Constants.SCORE_MIN, max = Constants.SCORE_MAX, message = "Scores must be whole numbers from 0 to 100")
+	@javax.validation.constraints.Size(min = Constants.SCORE_MIN, max = Constants.SCORE_MAX, message = "Scores must be whole numbers from 0 to 100")
 	private int score;
 	
 	@Column(name = "racePosition")

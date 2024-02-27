@@ -12,5 +12,7 @@ public interface UmpireRepository extends JpaRepository<Umpire, Integer>, JpaSpe
 	
 	public Umpire findByUmpireId(int umpireId);
 	
+	//Admin
 	public List<Umpire> findByNameContainingIgnoreCaseAndStatus(String name, int status);
+
 }

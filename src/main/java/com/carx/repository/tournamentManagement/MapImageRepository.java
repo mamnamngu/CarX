@@ -13,4 +13,5 @@ public interface MapImageRepository extends JpaRepository<MapImage, Long>, JpaSp
 	public MapImage findByMapImageId(long mapImageId);
 	
 	public List<MapImage> findByMapMapId(int mapId);
+
 }

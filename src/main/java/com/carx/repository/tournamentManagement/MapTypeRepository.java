@@ -3,6 +3,8 @@ package com.carx.repository.tournamentManagement;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.carx.entity.tournamentManagement.MapType;
@@ -12,6 +14,15 @@ public interface MapTypeRepository extends JpaRepository<MapType, Integer>, JpaS
 	
 	public MapType findByMapTypeId(int mapTypeId);
 	
-	public List<MapType> findByTournamentTournamentIdAndTypeNameContainingIgnoreCaseAndDescriptionContainingIgnoreCaseAndStatus(long tournamentId, String typeName, String description, int status);
+	//Guest
+	public List<MapType> findByTournamentTournamentIdAndStatusNot(long tournamentId, int status);
+	
+	//Admin
+	@Query("SELECT e FROM MapType e WHERE " +
+           "(:tournamentId IS NULL OR e.tournamentId = :tournamentId) AND " +
+           "((:typeName IS NULL OR LOWER(e.typeName) LIKE '%:typeName%') OR " +
+           "(:description IS NULL OR LOWER(e.description) LIKE '%:description%')) AND " +
+           "(:status IS NULL OR e.status = :status)")
+	public List<MapType> findByCombinedQuery(@Param("tournamentId") Long tournamentId, @Param("typeName") String typeName, @Param("description") String description, @Param("status") Integer status);
 	
 }
