@@ -18,8 +18,8 @@ public interface CarRepository extends JpaRepository<Car, Long>, JpaSpecificatio
 	@Query("SELECT e FROM Car e WHERE " +
            "(:teamId IS NULL OR e.team.teamId = :teamId) AND " +
            "(:carTypeId IS NULL OR e.carType.carTypeId = :carTypeId) AND " +
-           "((:carName IS NULL OR LOWER(e.carName) LIKE '%:carName%') OR " +
-           "(:description IS NULL OR LOWER(e.description) LIKE '%:description%')) AND " +
+           "((:carName IS NULL OR LOWER(e.carName) LIKE LOWER(CONCAT('%', :carName, '%'))) OR " +
+           "(:description IS NULL OR LOWER(e.description) LIKE LOWER(CONCAT('%', :description, '%')))) AND " +
            "(:status IS NULL OR e.status = :status)")
 	public List<Car> findByCombinedQuery(@Param("teamId") Long teamId, @Param("carTypeId") Integer carTypeId, @Param("carName") String carName, @Param("description") String description, @Param("status") Integer status);
 

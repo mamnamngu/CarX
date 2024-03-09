@@ -21,8 +21,8 @@ public interface MapRepository extends JpaRepository<Map, Integer>, JpaSpecifica
 	//Combined query
 	@Query("SELECT e FROM Map e WHERE " +
            "(:mapTypeId IS NULL OR e.mapType.mapTypeId = :mapTypeId) AND " +
-           "((:mapName IS NULL OR LOWER(e.mapName) LIKE '%:mapName%') OR " +
-           "(:description IS NULL OR LOWER(e.description) LIKE '%:description%')) AND " +
+           "((:mapName IS NULL OR LOWER(e.mapName) LIKE LOWER(CONCAT('%', :mapName, '%'))) OR " +
+           "(:description IS NULL OR LOWER(e.description) LIKE LOWER(CONCAT('%', :description, '%')))) AND " +
            "(:status IS NULL OR e.status = :status)")
 	public List<Map> findByCombinedQuery(@Param("mapTypeId") Integer mapTypeId, @Param("mapName") String mapName, @Param("description") String description, @Param("status") Integer status);
 

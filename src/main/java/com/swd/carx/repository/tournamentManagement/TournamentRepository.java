@@ -17,11 +17,10 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long>, J
 	
 	//Combined query
 	@Query("SELECT e FROM Tournament e WHERE " +
-           "(:tournamentName IS NULL OR LOWER(e.tournamentName) LIKE '%:tournamentName%') AND " +
+           "(:tournamentName IS NULL OR LOWER(e.tournamentName) LIKE LOWER(CONCAT('%', :tournamentName, '%'))) AND " +     
            "(:yearId IS NULL OR e.schoolYear.yearId = :yearId) AND " +
            "(:locationId IS NULL OR e.location.locationId = :locationId) AND " +
            "(e.date BETWEEN :lower AND :upper) AND " +
            "(:status IS NULL OR e.status = :status)")
 	public List<Tournament> findTournament(@Param("tournamentName") String tournamentName, @Param("yearId") Integer yearId, @Param("locationId") Integer locationId, @Param("lower") Date lower, @Param("upper") Date upper, @Param("status") Integer status);
-
 }

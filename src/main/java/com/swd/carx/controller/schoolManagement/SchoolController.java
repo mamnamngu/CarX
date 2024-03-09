@@ -49,11 +49,11 @@ public class SchoolController {
 		Date startDate;
 		Date endDate;
 		
-		if(startDateStr == null) startDate = Constants.START_DATE;
-		else startDate = Constants.strToDate(startDateStr);
+		if(startDateStr.equals("NaN-NaN-NaN")) startDate = Constants.START_DATE;
+		else startDate = Constants.strToDateLow(startDateStr);
 		
-		if(endDateStr == null) endDate = Constants.currentDate();
-		else endDate = Constants.strToDate(endDateStr);
+		if(endDateStr.equals("NaN-NaN-NaN")) endDate = Constants.currentDate();
+		else endDate = Constants.strToDateUp(endDateStr);
 		
 		if(status == null) status = Constants.DEFAULT_STATUS;
 		

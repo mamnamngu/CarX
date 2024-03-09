@@ -20,8 +20,8 @@ public interface MapTypeRepository extends JpaRepository<MapType, Integer>, JpaS
 	//Admin
 	@Query("SELECT e FROM MapType e WHERE " +
            "(:tournamentId IS NULL OR e.tournament.tournamentId = :tournamentId) AND " +
-           "((:typeName IS NULL OR LOWER(e.typeName) LIKE '%:typeName%') OR " +
-           "(:description IS NULL OR LOWER(e.description) LIKE '%:description%')) AND " +
+           "((:typeName IS NULL OR LOWER(e.typeName) LIKE LOWER(CONCAT('%', :typeName, '%'))) OR " +
+           "(:description IS NULL OR LOWER(e.description) LIKE LOWER(CONCAT('%', :description, '%')))) AND " +
            "(:status IS NULL OR e.status = :status)")
 	public List<MapType> findByCombinedQuery(@Param("tournamentId") Long tournamentId, @Param("typeName") String typeName, @Param("description") String description, @Param("status") Integer status);
 	

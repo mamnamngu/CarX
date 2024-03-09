@@ -67,17 +67,37 @@ public final class Constants {
 		return "%" + tmp + "%";
 	}
 	
+	//STRING TO INTEGER
+	public static final Integer strToInt(String str) {
+		try {
+	        return Integer.parseInt(str);
+	    } catch (NumberFormatException e) {
+	        return null;
+	    }
+	}
+	
 	//DATE FORMAT
-	public static final Date strToDate(String dateStr) {
+	public static final Date strToDateLow(String dateStr) {
 		 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");	
 	     try {
 	         Date date = dateFormat.parse(dateStr);
 	         return date;
 	     } catch (ParseException e) {
 	         System.out.println("Error parsing date: " + e.getMessage());
+	         return START_DATE;
 	     }
-	     return null;
      }
+	
+	public static final Date strToDateUp(String dateStr) {
+		 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");	
+	     try {
+	         Date date = dateFormat.parse(dateStr);
+	         return date;
+	     } catch (ParseException e) {
+	         System.out.println("Error parsing date: " + e.getMessage());
+	         return currentDate();
+	     }
+    }
 	
 	//TEXT AREA LENGTH
 	public static final int NVACHAR_MAX_LENGTH = 3000;

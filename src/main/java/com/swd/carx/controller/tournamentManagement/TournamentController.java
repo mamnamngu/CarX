@@ -21,6 +21,7 @@ import com.swd.carx.service.tournamentManagement.LocationService;
 import com.swd.carx.service.tournamentManagement.SchoolYearService;
 import com.swd.carx.service.tournamentManagement.TournamentService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.TournamentDTO;
 
 @RestController
 public class TournamentController {
@@ -35,8 +36,8 @@ public class TournamentController {
 	private LocationService locationService;
 	
 	@GetMapping("/tournaments")
-	public ResponseEntity<List<Tournament>> retrieveAllTournaments(){
-		return ResponseEntity.ok(tournamentService.findAll());
+	public ResponseEntity<List<TournamentDTO>> retrieveAllTournaments(){
+		return ResponseEntity.ok(tournamentService.display(tournamentService.findAll()));
     }
 	
 	@GetMapping("/tournament/{id}")
@@ -50,25 +51,29 @@ public class TournamentController {
 	}
 	
 	//Combined Query
-	@GetMapping("schoolYear/{yearId}/location/{locationId}/tournament/tournamentName/{tournamentName}/date/{lowerStr}/{upperStr}/status/{status}")
-	public ResponseEntity<List<Tournament>> retrieveTournament(@PathVariable Integer yearId, @PathVariable Integer locationId, @PathVariable String tournamentName, @PathVariable String lowerStr, @PathVariable String upperStr, @PathVariable Integer status) {
+	@GetMapping("schoolYear/{yearIdStr}/location/{locationIdStr}/tournament/tournamentName/{tournamentName}/date/{lowerStr}/{upperStr}/status/{statusStr}")
+	public ResponseEntity<List<TournamentDTO>> retrieveTournament(@PathVariable String yearIdStr, @PathVariable String locationIdStr, @PathVariable String tournamentName, @PathVariable String lowerStr, @PathVariable String upperStr, @PathVariable String statusStr) {
 		//Validation
 		if(tournamentName == null) tournamentName = "";
 		else tournamentName = tournamentName.toLowerCase().trim();
 		
+		Integer yearId = Constants.strToInt(yearIdStr);
+		Integer locationId = Constants.strToInt(locationIdStr);
+		Integer status =  Constants.strToInt(statusStr);
 		Date lower;
 		Date upper;
 		
-		if(lowerStr == null) lower = Constants.START_DATE;
-		else lower = Constants.strToDate(lowerStr);
+		if(lowerStr.equals("NaN-NaN-NaN")) lower = Constants.START_DATE;
+		else lower = Constants.strToDateLow(lowerStr);
 		
-		if(upperStr == null) upper = Constants.currentDate();
-		else upper = Constants.strToDate(upperStr);
+		if(upperStr.equals("NaN-NaN-NaN")) upper = Constants.currentDate();
+		else upper = Constants.strToDateUp(upperStr);
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		
 		List<Tournament> tournament = tournamentService.findByCombinedQuery(tournamentName, yearId, locationId, lower, upper, status);
-		return ResponseEntity.ok(tournament);
+		List<TournamentDTO> ls = tournamentService.display(tournament);
+		return ResponseEntity.ok(ls);
 	}
 	
 	@PostMapping("schoolYear/{yearId}/location/{locationId}/tournament")
