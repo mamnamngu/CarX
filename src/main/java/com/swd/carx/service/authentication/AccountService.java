@@ -38,7 +38,7 @@ public class AccountService {
 	//Admin filter
 	public List<Account> findByCombinedQuery(Integer roleId, Integer status) {
 		if(roleId == null) roleId = Constants.DEFAULT_ROLE;
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		return accountRepo.findByRoleRoleIdAndStatus(roleId, status);
 	}
 	
@@ -57,9 +57,9 @@ public class AccountService {
 	public boolean delete(long id) {
 		Account account = findById(id);
 		if(account == null) return false;
-		account.setStatus(Constants.DEFAULT_STATUS);
+		account.setStatus(Constants.DELETED_STATUS);
 		update(account);
-		return account.getStatus() == Constants.DEFAULT_STATUS;
+		return account.getStatus() == Constants.DELETED_STATUS;
 	}
 		
 	//UPDATE

@@ -34,7 +34,7 @@ public class SchoolYearService {
 	public List<SchoolYear> findByCombinedQuery(String searchKey, Integer status) {
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase();
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		return schoolYearRepo.findByDescriptionContainingIgnoreCaseAndStatus(searchKey, status);
 	}
 	

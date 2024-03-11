@@ -45,13 +45,13 @@ public class SchoolYearController {
 	}
 	
 	//Combined Query
-	@GetMapping("/schoolYear/searchKey/{searchKey}/status/{status}")
-	public ResponseEntity<List<SchoolYear>> retrieveSchoolYear(@PathVariable String searchKey, @PathVariable Integer status) {
+	@GetMapping("/schoolYear/searchKey/{searchKey}/status/{statusStr}")
+	public ResponseEntity<List<SchoolYear>> retrieveSchoolYear(@PathVariable String searchKey, @PathVariable String statusStr) {
 		//Validation
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase().trim();
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<SchoolYear> schoolYear = schoolYearService.findByCombinedQuery(searchKey, status);
 		return ResponseEntity.ok(schoolYear);

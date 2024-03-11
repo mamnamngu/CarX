@@ -38,13 +38,13 @@ public class LocationController {
 	}
 	
 	//Combined Query
-	@GetMapping("/location/searchKey/{searchKey}/status/{status}")
-	public ResponseEntity<List<Location>> retrieveLocation(@PathVariable String searchKey, @PathVariable Integer status) {
+	@GetMapping("/location/searchKey/{searchKey}/status/{statusStr}")
+	public ResponseEntity<List<Location>> retrieveLocation(@PathVariable String searchKey, @PathVariable String statusStr) {
 		//Validation
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase().trim();
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Location> location = locationService.findByCombinedQuery(searchKey, status);
 		return ResponseEntity.ok(location);

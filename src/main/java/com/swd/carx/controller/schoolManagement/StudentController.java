@@ -44,13 +44,14 @@ public class StudentController {
 	}
 	
 	//Combined Query
-	@GetMapping("school/{schoolId}/student/name/{name}/status/{status}")
-	public ResponseEntity<List<Student>> retrieveStudent(@PathVariable Integer schoolId, @PathVariable String name, @PathVariable Integer status) {
+	@GetMapping("school/{schoolIdStr}/student/name/{name}/status/{statusStr}")
+	public ResponseEntity<List<Student>> retrieveStudent(@PathVariable String schoolIdStr, @PathVariable String name, @PathVariable String statusStr) {
 		//Validation
 		if(name== null) name = "";
 		else name = name.toLowerCase().trim();
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Integer schoolId = Constants.strToInt(schoolIdStr);
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Student> student = studentService.findByCombinedQuery(name, schoolId, status);
 		return ResponseEntity.ok(student);

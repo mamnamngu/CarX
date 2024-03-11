@@ -49,13 +49,15 @@ public class CarController {
 	}
 	
 	//Combined Query
-	@GetMapping("team/{teamId}/carType/{carTypeId}/car/searchKey/{searchKey}/status/{status}")
-	public ResponseEntity<List<Car>> retrieveCar(@PathVariable Long teamId, @PathVariable Integer carTypeId, @PathVariable String searchKey, @PathVariable Integer status) {
+	@GetMapping("team/{teamIdStr}/carType/{carTypeIdStr}/car/searchKey/{searchKey}/status/{statusStr}")
+	public ResponseEntity<List<Car>> retrieveCar(@PathVariable String teamIdStr, @PathVariable String carTypeIdStr, @PathVariable String searchKey, @PathVariable String statusStr) {
 		//Validation
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase().trim();
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Long teamId = Constants.strToLong(teamIdStr);
+		Integer carTypeId = Constants.strToInt(carTypeIdStr);
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Car> car = carService.findByCombinedQuery(teamId, carTypeId, searchKey, status);
 		return ResponseEntity.ok(car);

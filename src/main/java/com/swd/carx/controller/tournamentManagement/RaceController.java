@@ -54,10 +54,13 @@ public class RaceController {
 	}
 
 	//Combined Query
-	@GetMapping("round/{roundId}/umpire/{umpireId}/map/{mapId}/race/status/{status}")
-	public ResponseEntity<List<Race>> retrieveRace(@PathVariable Long roundId, @PathVariable Integer umpireId, @PathVariable Integer mapId, @PathVariable Integer status) {
+	@GetMapping("round/{roundIdStr}/umpire/{umpireIdStr}/map/{mapIdStr}/race/status/{statusStr}")
+	public ResponseEntity<List<Race>> retrieveRace(@PathVariable String roundIdStr, @PathVariable String umpireIdStr, @PathVariable String mapIdStr, @PathVariable String statusStr) {
 		//Validation
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Long roundId = Constants.strToLong(roundIdStr);
+		Integer umpireId = Constants.strToInt(umpireIdStr);
+		Integer mapId = Constants.strToInt(mapIdStr);
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Race> race = raceService.findByCombinedQuery(roundId, umpireId, mapId, status);
 		return ResponseEntity.ok(race);

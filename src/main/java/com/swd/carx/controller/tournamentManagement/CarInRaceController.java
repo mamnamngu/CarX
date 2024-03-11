@@ -49,12 +49,14 @@ public class CarInRaceController {
 	}
 	
 	//Combined Query
-	@GetMapping("team/{teamId}/race/{raceId}/carInRace/score/{lower}/{upper}/status/{status}")
-	public ResponseEntity<List<CarInRace>> retrieveCarInRace(@PathVariable Long teamId, @PathVariable Long raceId, @PathVariable Integer lower, @PathVariable Integer upper, @PathVariable Integer status) {
+	@GetMapping("team/{teamIdStr}/race/{raceIdStr}/carInRace/score/{lowerStr}/{upperStr}/status/{statusStr}")
+	public ResponseEntity<List<CarInRace>> retrieveCarInRace(@PathVariable String teamIdStr, @PathVariable String raceIdStr, @PathVariable String lowerStr, @PathVariable String upperStr, @PathVariable String statusStr) {
 		//Validation
-		if(lower == null) lower = Constants.SCORE_MIN;
-		if(upper == null) upper = Constants.SCORE_MAX;
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Long teamId = Constants.strToLong(teamIdStr);
+		Long raceId = Constants.strToLong(raceIdStr);
+		Integer lower = Constants.strToInt(lowerStr);
+		Integer upper = Constants.strToInt(upperStr);
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<CarInRace> carInRace = carInRaceService.findByCombinedQuery(teamId, raceId, lower, upper, status);
 		return ResponseEntity.ok(carInRace);

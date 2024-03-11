@@ -39,13 +39,13 @@ public class UmpireController {
 	}
 	
 	//Combined Query
-	@GetMapping("/umpire/searchKey/{searchKey}/status/{status}")
-	public ResponseEntity<List<Umpire>> retrieveUmpire(@PathVariable String searchKey, @PathVariable Integer status) {
+	@GetMapping("/umpire/searchKey/{searchKey}/status/{statusStr}")
+	public ResponseEntity<List<Umpire>> retrieveUmpire(@PathVariable String searchKey, @PathVariable String statusStr) {
 		//Validation
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase().trim();
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Umpire> umpire = umpireService.findByCombinedQuery(searchKey, status);
 		return ResponseEntity.ok(umpire);

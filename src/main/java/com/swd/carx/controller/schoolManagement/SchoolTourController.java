@@ -71,10 +71,12 @@ public class SchoolTourController {
     }
 	
 	//Combined Query
-	@GetMapping("tournament/{tournamentId}/school/{schoolId}/schoolTour/status/{status}")
-	public ResponseEntity<List<SchoolTour>> retrieveSchoolTour(@PathVariable Long tournamentId, @PathVariable Integer schoolId, @PathVariable Integer status) {
+	@GetMapping("tournament/{tournamentIdStr}/school/{schoolIdStr}/schoolTour/status/{statusStr}")
+	public ResponseEntity<List<SchoolTour>> retrieveSchoolTour(@PathVariable String tournamentIdStr, @PathVariable String schoolIdStr, @PathVariable String statusStr) {
 		//Validation
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Long tournamentId = Constants.strToLong(tournamentIdStr);
+		Integer schoolId = Constants.strToInt(schoolIdStr);
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<SchoolTour> schoolTour = schoolTourService.findByCombinedQuery(tournamentId, schoolId, status);
 		return ResponseEntity.ok(schoolTour);

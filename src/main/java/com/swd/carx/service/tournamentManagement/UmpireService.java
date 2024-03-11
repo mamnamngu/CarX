@@ -29,7 +29,7 @@ public class UmpireService {
 	public List<Umpire> findByCombinedQuery(String searchKey, Integer status) {
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase();
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		return umpireRepo.findByNameContainingIgnoreCaseAndStatus(searchKey, status);
 	}
 	

@@ -40,8 +40,8 @@ public class SchoolController {
 	}
 	
 	//Combined Query
-	@GetMapping("/school/schoolName/{schoolName}/date/{startDateStr}/{endDateStr}/status/{status}")
-	public ResponseEntity<List<School>> retrieveSchool(@PathVariable String schoolName, @PathVariable String startDateStr, @PathVariable String endDateStr, @PathVariable Integer status) {
+	@GetMapping("/school/schoolName/{schoolName}/date/{startDateStr}/{endDateStr}/status/{statusStr}")
+	public ResponseEntity<List<School>> retrieveSchool(@PathVariable String schoolName, @PathVariable String startDateStr, @PathVariable String endDateStr, @PathVariable String statusStr) {
 		//Validation
 		if(schoolName == null) schoolName = "";
 		else schoolName = schoolName.toLowerCase().trim();
@@ -55,7 +55,7 @@ public class SchoolController {
 		if(endDateStr.equals("NaN-NaN-NaN")) endDate = Constants.currentDate();
 		else endDate = Constants.strToDateUp(endDateStr);
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<School> school = schoolService.findByCombinedQuery(schoolName, startDate, endDate, status);
 		return ResponseEntity.ok(school);

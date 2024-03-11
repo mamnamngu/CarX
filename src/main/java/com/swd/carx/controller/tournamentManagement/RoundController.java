@@ -55,10 +55,11 @@ public class RoundController {
     }
 	
 	//Combined Query
-	@GetMapping("tournament/{tournamentId}/round/status/{status}")
-	public ResponseEntity<List<Round>> retrieveRound(@PathVariable Long tournamentId, @PathVariable Integer status) {
+	@GetMapping("tournament/{tournamentIdStr}/round/status/{statusStr}")
+	public ResponseEntity<List<Round>> retrieveRound(@PathVariable String tournamentIdStr, @PathVariable String statusStr) {
 		//Validation
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Long tournamentId = Constants.strToLong(tournamentIdStr);
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Round> round = roundService.findByCombinedQuery(tournamentId, status);
 		return ResponseEntity.ok(round);

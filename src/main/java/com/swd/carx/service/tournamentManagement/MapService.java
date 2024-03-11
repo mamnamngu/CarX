@@ -1,13 +1,16 @@
 package com.swd.carx.service.tournamentManagement;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.swd.carx.entity.tournamentManagement.Map;
+import com.swd.carx.entity.tournamentManagement.MapType;
 import com.swd.carx.repository.tournamentManagement.MapRepository;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.MapDTO;
 
 
 @Service
@@ -35,7 +38,7 @@ public class MapService {
 	public List<Map> findByCombinedQuery(Integer mapTypeId, String searchKey, Integer status) {
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase();
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		return mapRepo.findByCombinedQuery(mapTypeId, searchKey, searchKey, status);
 	}
 	
@@ -57,5 +60,27 @@ public class MapService {
 	public Map update(Map newMap) {
 		return add(newMap);
 	}		
+	
+	//DISPLAY
+	public List<MapDTO> display(List<Map> ls){
+		List<MapDTO> list = new ArrayList<MapDTO>();
+		
+		for(Map x: ls) {
+			MapDTO y = new MapDTO();
+			y.setMapId(x.getMapId());
+			y.setMapName(x.getMapName());
+			y.setDescription(x.getDescription());
+			y.setStatus(x.getStatus());
+			y.setStatusTxt(Constants.STATUSES.get(x.getStatus()));
+			
+			//Map Type
+			MapType mapType = x.getMapType();
+			y.setMapTypeId(mapType.getMapTypeId());
+			y.setTypeName(mapType.getTypeName());
+			
+			list.add(y);
+		}
+		return list;
+	}
 	
 }

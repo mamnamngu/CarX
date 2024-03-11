@@ -1,13 +1,17 @@
 package com.swd.carx.service.schoolManagement;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.swd.carx.entity.schoolManagement.School;
 import com.swd.carx.entity.schoolManagement.SchoolTour;
+import com.swd.carx.entity.tournamentManagement.Tournament;
 import com.swd.carx.repository.schoolManagement.SchoolTourRepository;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.SchoolTourDTO;
 
 
 @Service
@@ -39,7 +43,7 @@ public class SchoolTourService {
 	
 	//Admin filter
 	public List<SchoolTour> findByCombinedQuery(Long tournamentId, Integer schoolId, Integer status) {
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		return schoolTourRepo.findByCombinedQuery(schoolId, tournamentId, status);
 	}
 	
@@ -60,6 +64,32 @@ public class SchoolTourService {
 	//UPDATE
 	public SchoolTour update(SchoolTour newSchoolTour) {
 		return add(newSchoolTour);
-	}		
+	}	
+	
+	//DISPLAY
+	public List<SchoolTourDTO> display(List<SchoolTour> ls){
+		List<SchoolTourDTO> list = new ArrayList<SchoolTourDTO>();
+		
+		for(SchoolTour x: ls) {
+			SchoolTourDTO y = new SchoolTourDTO();
+			y.setSchoolTourId(x.getSchoolTourId());
+			y.setNote(x.getNote());
+			y.setStatus(x.getStatus());
+			y.setStatusTxt(Constants.STATUSES.get(x.getStatus()));
+			
+			//Tournament
+			Tournament tournament = x.getTournament();
+			y.setTournamentId(tournament.getTournamentId());
+			y.setTournamentName(tournament.getTournamentName());
+			
+			//School
+			School school = x.getSchool();
+			y.setSchoolId(school.getSchoolId());
+			y.setSchoolName(school.getSchoolName());
+			
+			list.add(y);			
+		}
+		return list;
+	}
 	
 }

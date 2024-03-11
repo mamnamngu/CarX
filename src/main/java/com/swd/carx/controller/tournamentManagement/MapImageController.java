@@ -17,6 +17,7 @@ import com.swd.carx.entity.tournamentManagement.Map;
 import com.swd.carx.entity.tournamentManagement.MapImage;
 import com.swd.carx.service.tournamentManagement.MapImageService;
 import com.swd.carx.service.tournamentManagement.MapService;
+import com.swd.carx.utilities.Constants;
 
 @RestController
 public class MapImageController {
@@ -43,8 +44,9 @@ public class MapImageController {
 	}
 	
 	//Combined Query
-	@GetMapping("map/{mapId}/mapImage")
-	public ResponseEntity<List<MapImage>> retrieveMapImage(@PathVariable Integer mapId) {		
+	@GetMapping("map/{mapIdStr}/mapImage")
+	public ResponseEntity<List<MapImage>> retrieveMapImage(@PathVariable String mapIdStr) {	
+		Integer mapId = Constants.strToInt(mapIdStr);
 		List<MapImage> mapImage = mapImageService.findByMapId(mapId);
 		return ResponseEntity.ok(mapImage);
 	}

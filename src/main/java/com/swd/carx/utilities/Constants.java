@@ -76,6 +76,15 @@ public final class Constants {
 	    }
 	}
 	
+	//STRING TO LONG
+		public static final Long strToLong(String str) {
+			try {
+		        return Long.parseLong(str);
+		    } catch (NumberFormatException e) {
+		        return null;
+		    }
+		}
+	
 	//DATE FORMAT
 	public static final Date strToDateLow(String dateStr) {
 		 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");	

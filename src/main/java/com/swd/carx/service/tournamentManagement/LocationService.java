@@ -29,7 +29,7 @@ public class LocationService {
 	public List<Location> findByCombinedQuery(String searchKey, Integer status) {
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase();
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		return locationRepo.findByLocationNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseAndStatus(searchKey, searchKey, status);
 	}
 	

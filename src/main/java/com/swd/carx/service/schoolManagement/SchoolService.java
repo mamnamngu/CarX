@@ -32,7 +32,7 @@ public class SchoolService {
 		else schoolName = schoolName.toLowerCase();
 		if(startDate == null) startDate = Constants.START_DATE;
 		if(endDate == null) endDate = Constants.currentDate();
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		return schoolRepo.findBySchoolNameContainingIgnoreCaseAndCreateDateBetweenAndStatus(schoolName, startDate, endDate, status);
 	}
 	

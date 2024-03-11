@@ -55,15 +55,14 @@ public class MapTypeController {
     }
 	
 	//Combined Query
-	@GetMapping("tournament/{tournamentId}/mapType/searchKey/{searchKey}/status/{status}")
-	public ResponseEntity<List<MapType>> retrieveMapType(@PathVariable Long tournamentId, @PathVariable String searchKey, @PathVariable Integer status) {
+	@GetMapping("tournament/{tournamentIdStr}/mapType/searchKey/{searchKey}/status/{statusStr}")
+	public ResponseEntity<List<MapType>> retrieveMapType(@PathVariable String tournamentIdStr, @PathVariable String searchKey, @PathVariable String statusStr) {
 		//Validation
-		if(tournamentId == null) tournamentId = Constants.DEFAULT_TOURNAMENTID;
-
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase().trim();
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Long tournamentId = Constants.strToLong(tournamentIdStr);
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<MapType> mapType = mapTypeService.findByCombinedQuery(tournamentId, searchKey, status);
 		return ResponseEntity.ok(mapType);

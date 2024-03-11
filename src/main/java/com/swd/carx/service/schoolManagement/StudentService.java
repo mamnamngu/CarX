@@ -1,13 +1,16 @@
 package com.swd.carx.service.schoolManagement;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.swd.carx.entity.schoolManagement.School;
 import com.swd.carx.entity.schoolManagement.Student;
 import com.swd.carx.repository.schoolManagement.StudentRepository;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.StudentDTO;
 
 
 @Service
@@ -28,7 +31,7 @@ public class StudentService {
 	//Admin + School Assistant
 	public List<Student> findByCombinedQuery(String name, Integer schoolId, Integer status){
 		if(name != null) name = name.toLowerCase();
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		return studentRepo.findByNameAndSchoolIdAndStatus(name, schoolId, status);
 	}
 	
@@ -49,5 +52,31 @@ public class StudentService {
 	//UPDATE
 	public Student update(Student newStudent) {
 		return add(newStudent);
-	}		
+	}	
+	
+	//DISPLAY
+	public List<StudentDTO> display(List<Student> ls){
+		List<StudentDTO>list = new ArrayList<StudentDTO>();
+		
+		for(Student x: ls) {
+			StudentDTO y = new StudentDTO();
+			y.setStudentId(x.getStudentId());
+			y.setName(x.getName());
+			y.setDOB(x.getDOB());
+			y.setGender(x.isGender());
+			y.setPhone(x.getPhone());
+			y.setEmail(x.getEmail());
+			y.setNote(x.getNote());
+			y.setStatus(x.getStatus());
+			y.setStatusTxt(Constants.STATUSES.get(x.getStatus()));
+			
+			//School
+			School school = x.getSchool();
+			y.setSchoolId(school.getSchoolId());
+			y.setSchoolName(school.getSchoolName());
+			
+			list.add(y);
+		}
+		return list;
+	}
 }

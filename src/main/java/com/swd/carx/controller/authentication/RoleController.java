@@ -39,13 +39,13 @@ public class RoleController {
 	}
 	
 	//Combined Query
-	@GetMapping("/role/name/{name}/status/{status}")
-	public ResponseEntity<List<Role>> retrieveRole(@PathVariable String name, @PathVariable Integer status) {
+	@GetMapping("/role/name/{name}/status/{statusStr}")
+	public ResponseEntity<List<Role>> retrieveRole(@PathVariable String name, @PathVariable String statusStr) {
 		//Validation
 		if(name == null) name = "";
 		else name = name.toLowerCase().trim();
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Role> role = roleService.findByCombinedQuery(name, status);
 		return ResponseEntity.ok(role);

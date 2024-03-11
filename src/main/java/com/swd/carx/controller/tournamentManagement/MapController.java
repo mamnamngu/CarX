@@ -55,13 +55,14 @@ public class MapController {
     }
 	
 	//Combined Query
-	@GetMapping("mapType/{mapTypeId}/map/searchKey/{searchKey}/status/{status}")
-	public ResponseEntity<List<Map>> retrieveMap(@PathVariable Integer mapTypeId, @PathVariable String searchKey, @PathVariable Integer status) {
+	@GetMapping("mapType/{mapTypeIdStr}/map/searchKey/{searchKey}/status/{statusStr}")
+	public ResponseEntity<List<Map>> retrieveMap(@PathVariable String mapTypeIdStr, @PathVariable String searchKey, @PathVariable String statusStr) {
 		//Validation
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase().trim();
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+		Integer mapTypeId = Constants.strToInt(mapTypeIdStr);
+		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Map> map = mapService.findByCombinedQuery(mapTypeId, searchKey, status);
 		return ResponseEntity.ok(map);

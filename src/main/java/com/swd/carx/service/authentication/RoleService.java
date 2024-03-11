@@ -29,7 +29,7 @@ public class RoleService {
 		if(name == null) name = "";
 		else name = name.toLowerCase();
 		
-		if(status == null) status = Constants.DEFAULT_STATUS;
+//		if(status == null) status = Constants.DEFAULT_STATUS;
 		return roleRepo.findByNameContainingIgnoreCaseAndStatus(name, status);
 	}
 	
