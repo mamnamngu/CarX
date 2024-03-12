@@ -18,6 +18,7 @@ import com.swd.carx.entity.schoolManagement.Student;
 import com.swd.carx.service.schoolManagement.SchoolService;
 import com.swd.carx.service.schoolManagement.StudentService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.StudentDTO;
 
 @RestController
 public class StudentController {
@@ -29,8 +30,8 @@ public class StudentController {
 	private SchoolService schoolService;
 	
 	@GetMapping("/students")
-	public ResponseEntity<List<Student>> retrieveAllStudents(){
-		return ResponseEntity.ok(studentService.findAll());
+	public ResponseEntity<List<StudentDTO>> retrieveAllStudents(){
+		return ResponseEntity.ok(studentService.display(studentService.findAll()));
     }
 	
 	@GetMapping("/student/{id}")
@@ -45,7 +46,7 @@ public class StudentController {
 	
 	//Combined Query
 	@GetMapping("school/{schoolIdStr}/student/name/{name}/status/{statusStr}")
-	public ResponseEntity<List<Student>> retrieveStudent(@PathVariable String schoolIdStr, @PathVariable String name, @PathVariable String statusStr) {
+	public ResponseEntity<List<StudentDTO>> retrieveStudent(@PathVariable String schoolIdStr, @PathVariable String name, @PathVariable String statusStr) {
 		//Validation
 		if(name== null) name = "";
 		else name = name.toLowerCase().trim();
@@ -54,7 +55,7 @@ public class StudentController {
 		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Student> student = studentService.findByCombinedQuery(name, schoolId, status);
-		return ResponseEntity.ok(student);
+		return ResponseEntity.ok(studentService.display(student));
 	}
 	
 	@PostMapping("school/{schoolId}/student")

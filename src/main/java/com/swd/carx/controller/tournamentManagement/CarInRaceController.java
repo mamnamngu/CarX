@@ -20,6 +20,7 @@ import com.swd.carx.service.schoolManagement.TeamService;
 import com.swd.carx.service.tournamentManagement.CarInRaceService;
 import com.swd.carx.service.tournamentManagement.RaceService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.CarInRaceDTO;
 
 @RestController
 public class CarInRaceController {
@@ -34,8 +35,8 @@ public class CarInRaceController {
 	private RaceService raceService;
 	
 	@GetMapping("/carInRaces")
-	public ResponseEntity<List<CarInRace>> retrieveAllCarInRaces(){
-		return ResponseEntity.ok(carInRaceService.findAll());
+	public ResponseEntity<List<CarInRaceDTO>> retrieveAllCarInRaces(){
+		return ResponseEntity.ok(carInRaceService.display(carInRaceService.findAll()));
     }
 	
 	@GetMapping("/carInRace/{id}")
@@ -50,7 +51,7 @@ public class CarInRaceController {
 	
 	//Combined Query
 	@GetMapping("team/{teamIdStr}/race/{raceIdStr}/carInRace/score/{lowerStr}/{upperStr}/status/{statusStr}")
-	public ResponseEntity<List<CarInRace>> retrieveCarInRace(@PathVariable String teamIdStr, @PathVariable String raceIdStr, @PathVariable String lowerStr, @PathVariable String upperStr, @PathVariable String statusStr) {
+	public ResponseEntity<List<CarInRaceDTO>> retrieveCarInRace(@PathVariable String teamIdStr, @PathVariable String raceIdStr, @PathVariable String lowerStr, @PathVariable String upperStr, @PathVariable String statusStr) {
 		//Validation
 		Long teamId = Constants.strToLong(teamIdStr);
 		Long raceId = Constants.strToLong(raceIdStr);
@@ -59,7 +60,7 @@ public class CarInRaceController {
 		Integer status =  Constants.strToInt(statusStr);
 		
 		List<CarInRace> carInRace = carInRaceService.findByCombinedQuery(teamId, raceId, lower, upper, status);
-		return ResponseEntity.ok(carInRace);
+		return ResponseEntity.ok(carInRaceService.display(carInRace));
 	}
 	
 	@PostMapping("team/{teamId}/race/{raceId}/carInRace")

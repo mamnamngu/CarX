@@ -22,6 +22,7 @@ import com.swd.carx.service.tournamentManagement.RaceService;
 import com.swd.carx.service.tournamentManagement.RoundService;
 import com.swd.carx.service.tournamentManagement.UmpireService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.RaceDTO;
 
 @RestController
 public class RaceController {
@@ -39,8 +40,8 @@ public class RaceController {
 	private MapService mapService;
 	
 	@GetMapping("/races")
-	public ResponseEntity<List<Race>> retrieveAllRaces(){
-		return ResponseEntity.ok(raceService.findAll());
+	public ResponseEntity<List<RaceDTO>> retrieveAllRaces(){
+		return ResponseEntity.ok(raceService.display(raceService.findAll()));
     }
 	
 	@GetMapping("/race/{id}")
@@ -55,7 +56,7 @@ public class RaceController {
 
 	//Combined Query
 	@GetMapping("round/{roundIdStr}/umpire/{umpireIdStr}/map/{mapIdStr}/race/status/{statusStr}")
-	public ResponseEntity<List<Race>> retrieveRace(@PathVariable String roundIdStr, @PathVariable String umpireIdStr, @PathVariable String mapIdStr, @PathVariable String statusStr) {
+	public ResponseEntity<List<RaceDTO>> retrieveRace(@PathVariable String roundIdStr, @PathVariable String umpireIdStr, @PathVariable String mapIdStr, @PathVariable String statusStr) {
 		//Validation
 		Long roundId = Constants.strToLong(roundIdStr);
 		Integer umpireId = Constants.strToInt(umpireIdStr);
@@ -63,7 +64,7 @@ public class RaceController {
 		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Race> race = raceService.findByCombinedQuery(roundId, umpireId, mapId, status);
-		return ResponseEntity.ok(race);
+		return ResponseEntity.ok(raceService.display(race));
 	}
 	
 	@PostMapping("round/{roundId}/umpire/{umpireId}/map/{mapId}/race")

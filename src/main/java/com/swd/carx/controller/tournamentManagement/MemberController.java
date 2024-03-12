@@ -22,6 +22,7 @@ import com.swd.carx.service.schoolManagement.TeamService;
 import com.swd.carx.service.tournamentManagement.MemberService;
 import com.swd.carx.service.tournamentManagement.TournamentService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.MemberDTO;
 
 @RestController
 public class MemberController {
@@ -39,8 +40,8 @@ public class MemberController {
 	private TournamentService tournamentService;
 	
 	@GetMapping("/members")
-	public ResponseEntity<List<Member>> retrieveAllMembers(){
-		return ResponseEntity.ok(memberService.findAll());
+	public ResponseEntity<List<MemberDTO>> retrieveAllMembers(){
+		return ResponseEntity.ok(memberService.display(memberService.findAll()));
     }
 	
 	@GetMapping("/member/{id}")
@@ -55,7 +56,7 @@ public class MemberController {
 	
 	//Combined Query
 	@GetMapping("student/{studentIdStr}/team/{teamIdStr}/tournament/{tournamentIdStr}/member/status/{statusStr}")
-	public ResponseEntity<List<Member>> retrieveMember(@PathVariable String studentIdStr, @PathVariable String teamIdStr, @PathVariable String tournamentIdStr, @PathVariable String statusStr) {
+	public ResponseEntity<List<MemberDTO>> retrieveMember(@PathVariable String studentIdStr, @PathVariable String teamIdStr, @PathVariable String tournamentIdStr, @PathVariable String statusStr) {
 		//Validation
 		Long studentId = Constants.strToLong(studentIdStr);
 		Long teamId = Constants.strToLong(teamIdStr);
@@ -63,7 +64,7 @@ public class MemberController {
 		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Member> member = memberService.findByCombinedQuery(studentId, teamId, tournamentId, status);
-		return ResponseEntity.ok(member);
+		return ResponseEntity.ok(memberService.display(member));
 	}
 	
 	@PostMapping("student/{studentId}/team/{teamId}/tournament/{tournamentId}/member")

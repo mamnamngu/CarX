@@ -18,6 +18,7 @@ import com.swd.carx.entity.tournamentManagement.MapType;
 import com.swd.carx.service.tournamentManagement.MapService;
 import com.swd.carx.service.tournamentManagement.MapTypeService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.MapDTO;
 
 @RestController
 public class MapController {
@@ -29,8 +30,8 @@ public class MapController {
 	private MapTypeService mapTypeService;
 	
 	@GetMapping("/maps")
-	public ResponseEntity<List<Map>> retrieveAllMaps(){
-		return ResponseEntity.ok(mapService.findAll());
+	public ResponseEntity<List<MapDTO>> retrieveAllMaps(){
+		return ResponseEntity.ok(mapService.display(mapService.findAll()));
     }
 	
 	@GetMapping("/map/{id}")
@@ -45,18 +46,18 @@ public class MapController {
 	
 	//Guest Display
 	@GetMapping("mapType/{mapTypeId}/map")
-	public ResponseEntity<List<Map>> findByMapTypeIdForDisplay(@PathVariable int mapTypeId){
+	public ResponseEntity<List<MapDTO>> findByMapTypeIdForDisplay(@PathVariable int mapTypeId){
 		MapType mapType = mapTypeService.findById(mapTypeId);
 		if(mapType != null) {
 			List<Map> ls = mapService.findByMapTypeIdDisplay(mapTypeId);
-			return ResponseEntity.ok(ls);
+			return ResponseEntity.ok(mapService.display(ls));
 		}
 		else return ResponseEntity.notFound().header("message", "No Map Type found for such ID").build();
     }
 	
 	//Combined Query
 	@GetMapping("mapType/{mapTypeIdStr}/map/searchKey/{searchKey}/status/{statusStr}")
-	public ResponseEntity<List<Map>> retrieveMap(@PathVariable String mapTypeIdStr, @PathVariable String searchKey, @PathVariable String statusStr) {
+	public ResponseEntity<List<MapDTO>> retrieveMap(@PathVariable String mapTypeIdStr, @PathVariable String searchKey, @PathVariable String statusStr) {
 		//Validation
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase().trim();
@@ -65,7 +66,7 @@ public class MapController {
 		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Map> map = mapService.findByCombinedQuery(mapTypeId, searchKey, status);
-		return ResponseEntity.ok(map);
+		return ResponseEntity.ok(mapService.display(map));
 	}
 	
 	@PostMapping("mapType/{mapTypeId}/map")

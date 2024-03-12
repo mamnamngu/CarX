@@ -4,6 +4,14 @@ INSERT INTO School (schoolName, address, phone, mail, createDate, note, status) 
 INSERT INTO School (schoolName, address, phone, mail, createDate, note, status) VALUES (N'THPT Nguyễn Thượng Hiền', N'649 Đ. Hoàng Văn Thụ, Phường 4, Tân Bình, Thành phố Hồ Chí Minh, Vietnam', '0173948965', 'thptnguyenthuonghien@gmail.edu.vn', '02/05/2023', '', '0');
 INSERT INTO School (schoolName, address, phone, mail, createDate, note, status) VALUES (N'THPT Bùi Thị Xuân', N'73 Đ. Bùi Thị Xuân, Phường Phạm Ngũ Lão, Quận 1, Thành phố Hồ Chí Minh, Vietnam', '0926782193', 'thptbuithixuan@gmail.edu.vn', '02/05/2023', '', '0');
 
+--ASSISTANT INSERTION
+INSERT INTO Assistant (schoolId, name, DOB, gender, phone, email, note, status) VALUES ('1', N'Trần Nguyễn Thiên Ân', '04/18/1992', '1', '01893664649', 'antnt@gmail.com', 'primary', '0');
+INSERT INTO Assistant (schoolId, name, DOB, gender, phone, email, note, status) VALUES ('1', N'Trần Tiến Dũng', '05/22/1990', '1', '02866487476', 'dungtt@gmail.com', 'collateral', '0');
+INSERT INTO Assistant (schoolId, name, DOB, gender, phone, email, note, status) VALUES ('2', N'Nguyễn Quốc Chánh', '10/20/1989', '1', '08338799837', 'chanhnq@gmail.com', 'primary', '0');
+INSERT INTO Assistant (schoolId, name, DOB, gender, phone, email, note, status) VALUES ('2', N'Hoàng Thành Long', '06/07/1994', '1', '09378963929', 'longht@gmail.com', 'collateral', '0');
+INSERT INTO Assistant (schoolId, name, DOB, gender, phone, email, note, status) VALUES ('3', N'Lương Vĩnh Thiệu', '09/18/1993', '1', '09782979943', 'thieulv@gmail.com', 'primary', '0');
+INSERT INTO Assistant (schoolId, name, DOB, gender, phone, email, note, status) VALUES ('3', N'Nguyễn Nhật Huy', '10/11/1990', '1', '01378936498', 'huynn@gmail.com', 'collateral', '0');
+
 --SCHOOL YEAR INSERTION
 INSERT INTO SchoolYear (yearNo, description, status) VALUES ('2023', '2023 is the establishment year of CarX.', '3');
 INSERT INTO SchoolYear (yearNo, description, status) VALUES ('2024', '2024 marks miraculous growth of CarX on the track of introducing IOT and Programminig concepts to students of all ages.', '0');
@@ -184,19 +192,19 @@ INSERT INTO [Round] (tournamentId, startTime, endTime, note, status) VALUES ('6'
 INSERT INTO [Round] (tournamentId, startTime, endTime, note, status) VALUES ('6', '', '', 'Finish', '4');
 
 --RACE INSERTION
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('1', '1', '3', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('1', '1', '3', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('1', '1', '3', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('1', '1', '3', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '2', '8', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '2', '8', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '2', '8', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '3', '8', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '3', '8', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '3', '8', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('3', '4', '14', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('3', '4', '14', '', '', '', '4');
-INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('3', '4', '14', '', '', '', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('1', '1', '3', '', '', 'Race 1.1', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('1', '1', '3', '', '', 'Race 1.2', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('1', '1', '3', '', '', 'Race 1.3', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('1', '1', '3', '', '', 'Race 1.4', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '2', '8', '', '', 'Race 2.1', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '2', '8', '', '', 'Race 2.2', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '2', '8', '', '', 'Race 2.3', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '3', '8', '', '', 'Race 2.4', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '3', '8', '', '', 'Race 2.5', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('2', '3', '8', '', '', 'Race 2.6', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('3', '4', '14', '', '', 'Race 3.1', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('3', '4', '14', '', '', 'Race 3.2', '4');
+INSERT INTO Race (roundId, umpireId, mapId, startTime, endTime, note, status) VALUES ('3', '4', '14', '', '', 'Race 3.3', '4');
 
 --TEAM INSERTION
 INSERT INTO Team (schoolTourId, teamName, avatar, description, status) VALUES ('1', 'Speed Demons', 'https://firebasestorage.googleapis.com/v0/b/carx-swd392.appspot.com/o/images%2Fteams%2FSpeed%20Demon.png?alt=media&token=c10ce563-1366-492c-bc7e-fc2fe5584780', 'Speed Demon Racing Team is a formidable contender in the world of car racing competitions, known for their cutting-edge technology, strategic prowess, and unyielding determination. Comprising a diverse group of individuals, including seasoned drivers with a knack for high speeds, Speed Demon has carved out a reputation for excellence on the track.', '0');

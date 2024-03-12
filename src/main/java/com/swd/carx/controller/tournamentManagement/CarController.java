@@ -20,6 +20,7 @@ import com.swd.carx.service.schoolManagement.TeamService;
 import com.swd.carx.service.tournamentManagement.CarService;
 import com.swd.carx.service.tournamentManagement.CarTypeService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.CarDTO;
 
 @RestController
 public class CarController {
@@ -34,8 +35,8 @@ public class CarController {
 	private TeamService teamService;
 	
 	@GetMapping("/cars")
-	public ResponseEntity<List<Car>> retrieveAllCars(){
-		return ResponseEntity.ok(carService.findAll());
+	public ResponseEntity<List<CarDTO>> retrieveAllCars(){
+		return ResponseEntity.ok(carService.display(carService.findAll()));
     }
 	
 	@GetMapping("/car/{id}")
@@ -50,7 +51,7 @@ public class CarController {
 	
 	//Combined Query
 	@GetMapping("team/{teamIdStr}/carType/{carTypeIdStr}/car/searchKey/{searchKey}/status/{statusStr}")
-	public ResponseEntity<List<Car>> retrieveCar(@PathVariable String teamIdStr, @PathVariable String carTypeIdStr, @PathVariable String searchKey, @PathVariable String statusStr) {
+	public ResponseEntity<List<CarDTO>> retrieveCar(@PathVariable String teamIdStr, @PathVariable String carTypeIdStr, @PathVariable String searchKey, @PathVariable String statusStr) {
 		//Validation
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase().trim();
@@ -60,7 +61,7 @@ public class CarController {
 		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Car> car = carService.findByCombinedQuery(teamId, carTypeId, searchKey, status);
-		return ResponseEntity.ok(car);
+		return ResponseEntity.ok(carService.display(car));
 	}
 	
 	@PostMapping("team/{teamId}/carType/{carTypeId}/car")

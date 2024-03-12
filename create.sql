@@ -2,6 +2,7 @@ CREATE DATABASE CarX
 GO
 
 create table Account (accountId numeric(19,0) identity not null, createDate datetime not null, note varchar(255), password varchar(255) not null, status INT DEFAULT 0 not null, username varchar(255) not null, roleId int not null, primary key (accountId));
+create table Assistant (assistantId int identity not null, DOB datetime not null, email varchar(255) not null, gender bit not null, name NVARCHAR(300) not null, note NVARCHAR(300), phone varchar(255) not null, status INT DEFAULT 0 not null, schoolId int not null, primary key (assistantId));
 create table Car (carId numeric(19,0) identity not null, carName NVARCHAR(300) not null, createDate datetime not null, description NVARCHAR(3000), status INT DEFAULT 0 not null, carTypeId int not null, teamId numeric(19,0) not null, primary key (carId));
 create table CarInRace (carRaceId numeric(19,0) identity not null, bonus INT DEFAULT 0, endTime datetime, penalty INT DEFAULT 0, racePosition int, score int, startTime datetime, status INT DEFAULT 0 not null, raceId numeric(19,0) not null, teamId numeric(19,0) not null, primary key (carRaceId));
 create table CarType (carTypeId int identity not null, avatar NVARCHAR(300) DEFAULT 'https://firebasestorage.googleapis.com/v0/b/carx-swd392.appspot.com/o/images%2Fcar%20models%2Fdefault%20car%20type%20avatar.jpg?alt=media&token=9718a570-999f-4290-9a9c-7289c2f3707e' not null, description NVARCHAR(3000), name NVARCHAR(300) not null, note NVARCHAR(300), status INT DEFAULT 0 not null, primary key (carTypeId));
@@ -22,6 +23,7 @@ create table Tournament (tournamentId numeric(19,0) identity not null, date date
 create table Umpire (umpireId int identity not null, DOB datetime not null, email varchar(255) not null, gender bit not null, name NVARCHAR(300) not null, note NVARCHAR(300), phone varchar(255) not null, status INT DEFAULT 0 not null, primary key (umpireId));
 alter table Account add constraint UK_de34gsw4qt8auhffbna969ahp unique (username);
 alter table Account add constraint FKn410hnfqcgp1xqbc6e9v4lper foreign key (roleId) references Role;
+alter table Assistant add constraint FKaajrtwcap7b0ge8ktigjq2g1i foreign key (schoolId) references School;
 alter table Car add constraint FK50wgij30w6h7aodbbhsafcg8h foreign key (carTypeId) references CarType;
 alter table Car add constraint FKrvk1a9xobx2dqytgtp6n23a4c foreign key (teamId) references Team;
 alter table CarInRace add constraint FK1rjjoljk3vbnpnqoxk9w2hd43 foreign key (raceId) references Race;

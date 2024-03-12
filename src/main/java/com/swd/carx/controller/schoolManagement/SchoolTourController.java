@@ -20,6 +20,7 @@ import com.swd.carx.service.schoolManagement.SchoolService;
 import com.swd.carx.service.schoolManagement.SchoolTourService;
 import com.swd.carx.service.tournamentManagement.TournamentService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.SchoolTourDTO;
 
 @RestController
 public class SchoolTourController {
@@ -34,8 +35,8 @@ public class SchoolTourController {
 	private SchoolService schoolService;
 	
 	@GetMapping("/schoolTours")
-	public ResponseEntity<List<SchoolTour>> retrieveAllSchoolTours(){
-		return ResponseEntity.ok(schoolTourService.findAll());
+	public ResponseEntity<List<SchoolTourDTO>> retrieveAllSchoolTours(){
+		return ResponseEntity.ok(schoolTourService.display(schoolTourService.findAll()));
     }
 	
 	@GetMapping("/schoolTour/{id}")
@@ -50,36 +51,36 @@ public class SchoolTourController {
 	
 	//Display for Guests
 	@GetMapping("tournament/{tournamentId}/schoolTours")
-	public ResponseEntity<List<SchoolTour>> findByTournamentIdForDisplay(@PathVariable long tournamentId){
+	public ResponseEntity<List<SchoolTourDTO>> findByTournamentIdForDisplay(@PathVariable long tournamentId){
 		Tournament tournament = tournamentService.findById(tournamentId);
 		if(tournament != null) {
 			List<SchoolTour> ls = schoolTourService.findByTournamentIdForDisplay(tournamentId);
-			return ResponseEntity.ok(ls);
+			return ResponseEntity.ok(schoolTourService.display(ls));
 		}
 		else return ResponseEntity.notFound().header("message", "No Tournament found for such ID").build();
     }
 	
 	//Display for Guests
 	@GetMapping("school/{schoolId}/schoolTours")
-	public ResponseEntity<List<SchoolTour>> findBySchoolIdForDisplay(@PathVariable int schoolId){
+	public ResponseEntity<List<SchoolTourDTO>> findBySchoolIdForDisplay(@PathVariable int schoolId){
 		School school = schoolService.findById(schoolId);
 		if(school != null) {
 			List<SchoolTour> ls = schoolTourService.findBySchoolIdForDisplay(schoolId);
-			return ResponseEntity.ok(ls);
+			return ResponseEntity.ok(schoolTourService.display(ls));
 		}
 		else return ResponseEntity.notFound().header("message", "No School found for such ID").build();
     }
 	
 	//Combined Query
 	@GetMapping("tournament/{tournamentIdStr}/school/{schoolIdStr}/schoolTour/status/{statusStr}")
-	public ResponseEntity<List<SchoolTour>> retrieveSchoolTour(@PathVariable String tournamentIdStr, @PathVariable String schoolIdStr, @PathVariable String statusStr) {
+	public ResponseEntity<List<SchoolTourDTO>> retrieveSchoolTour(@PathVariable String tournamentIdStr, @PathVariable String schoolIdStr, @PathVariable String statusStr) {
 		//Validation
 		Long tournamentId = Constants.strToLong(tournamentIdStr);
 		Integer schoolId = Constants.strToInt(schoolIdStr);
 		Integer status =  Constants.strToInt(statusStr);
 		
 		List<SchoolTour> schoolTour = schoolTourService.findByCombinedQuery(tournamentId, schoolId, status);
-		return ResponseEntity.ok(schoolTour);
+		return ResponseEntity.ok(schoolTourService.display(schoolTour));
 	}
 	
 	@PostMapping("tournament/{tournamentId}/school/{schoolId}/schoolTour")

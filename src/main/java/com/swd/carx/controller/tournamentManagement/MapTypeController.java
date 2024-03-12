@@ -18,6 +18,7 @@ import com.swd.carx.entity.tournamentManagement.Tournament;
 import com.swd.carx.service.tournamentManagement.MapTypeService;
 import com.swd.carx.service.tournamentManagement.TournamentService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.MapTypeDTO;
 
 @RestController
 public class MapTypeController {
@@ -29,8 +30,8 @@ public class MapTypeController {
 	private TournamentService tournamentService;
 	
 	@GetMapping("/mapTypes")
-	public ResponseEntity<List<MapType>> retrieveAllMapTypes(){
-		return ResponseEntity.ok(mapTypeService.findAll());
+	public ResponseEntity<List<MapTypeDTO>> retrieveAllMapTypes(){
+		return ResponseEntity.ok(mapTypeService.display(mapTypeService.findAll()));
     }
 	
 	@GetMapping("/mapType/{id}")
@@ -45,18 +46,18 @@ public class MapTypeController {
 	
 	//Display for Guests
 	@GetMapping("tournament/{tournamentId}/mapTypes")
-	public ResponseEntity<List<MapType>> findByTournamentIdForDisplay(@PathVariable long tournamentId){
+	public ResponseEntity<List<MapTypeDTO>> findByTournamentIdForDisplay(@PathVariable long tournamentId){
 		Tournament tournament = tournamentService.findById(tournamentId);
 		if(tournament != null) {
 			List<MapType> ls = mapTypeService.findByTournamentIdDisplay(tournamentId);
-			return ResponseEntity.ok(ls);
+			return ResponseEntity.ok(mapTypeService.display(ls));
 		}
 		else return ResponseEntity.notFound().header("message", "No Tournament found for such ID").build();
     }
 	
 	//Combined Query
 	@GetMapping("tournament/{tournamentIdStr}/mapType/searchKey/{searchKey}/status/{statusStr}")
-	public ResponseEntity<List<MapType>> retrieveMapType(@PathVariable String tournamentIdStr, @PathVariable String searchKey, @PathVariable String statusStr) {
+	public ResponseEntity<List<MapTypeDTO>> retrieveMapType(@PathVariable String tournamentIdStr, @PathVariable String searchKey, @PathVariable String statusStr) {
 		//Validation
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase().trim();
@@ -65,7 +66,7 @@ public class MapTypeController {
 		Integer status =  Constants.strToInt(statusStr);
 		
 		List<MapType> mapType = mapTypeService.findByCombinedQuery(tournamentId, searchKey, status);
-		return ResponseEntity.ok(mapType);
+		return ResponseEntity.ok(mapTypeService.display(mapType));
 	}
 	
 	@PostMapping("tournament/{tournamentId}/mapType")

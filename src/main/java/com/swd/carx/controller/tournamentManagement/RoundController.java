@@ -18,6 +18,7 @@ import com.swd.carx.entity.tournamentManagement.Tournament;
 import com.swd.carx.service.tournamentManagement.RoundService;
 import com.swd.carx.service.tournamentManagement.TournamentService;
 import com.swd.carx.utilities.Constants;
+import com.swd.carx.view.RoundDTO;
 
 @RestController
 public class RoundController {
@@ -29,8 +30,8 @@ public class RoundController {
 	private TournamentService tournamentService;
 	
 	@GetMapping("/rounds")
-	public ResponseEntity<List<Round>> retrieveAllRounds(){
-		return ResponseEntity.ok(roundService.findAll());
+	public ResponseEntity<List<RoundDTO>> retrieveAllRounds(){
+		return ResponseEntity.ok(roundService.display(roundService.findAll()));
     }
 	
 	@GetMapping("/round/{id}")
@@ -45,24 +46,24 @@ public class RoundController {
 	
 	//Display for Guests
 	@GetMapping("tournament/{tournamentId}/rounds")
-	public ResponseEntity<List<Round>> findByTournamentIdForDisplay(@PathVariable long tournamentId){
+	public ResponseEntity<List<RoundDTO>> findByTournamentIdForDisplay(@PathVariable long tournamentId){
 		Tournament tournament = tournamentService.findById(tournamentId);
 		if(tournament != null) {
 			List<Round> ls = roundService.findByTournamentIdDisplay(tournamentId);
-			return ResponseEntity.ok(ls);
+			return ResponseEntity.ok(roundService.display(ls));
 		}
 		else return ResponseEntity.notFound().header("message", "No Tournament found for such ID").build();
     }
 	
 	//Combined Query
 	@GetMapping("tournament/{tournamentIdStr}/round/status/{statusStr}")
-	public ResponseEntity<List<Round>> retrieveRound(@PathVariable String tournamentIdStr, @PathVariable String statusStr) {
+	public ResponseEntity<List<RoundDTO>> retrieveRound(@PathVariable String tournamentIdStr, @PathVariable String statusStr) {
 		//Validation
 		Long tournamentId = Constants.strToLong(tournamentIdStr);
 		Integer status =  Constants.strToInt(statusStr);
 		
 		List<Round> round = roundService.findByCombinedQuery(tournamentId, status);
-		return ResponseEntity.ok(round);
+		return ResponseEntity.ok(roundService.display(round));
 	}
 	
 	@PostMapping("tournament/{tournamentId}/round")
