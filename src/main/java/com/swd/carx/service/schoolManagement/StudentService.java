@@ -29,10 +29,10 @@ public class StudentService {
 	}
 	
 	//Admin + School Assistant
-	public List<Student> findByCombinedQuery(String name, Integer schoolId, Integer status){
+	public List<Student> findByCombinedQuery(Long studentId, String name, Integer schoolId, Integer status){
 		if(name != null) name = name.toLowerCase();
 //		if(status == null) status = Constants.DEFAULT_STATUS;
-		return studentRepo.findByNameAndSchoolIdAndStatus(name, schoolId, status);
+		return studentRepo.findByNameAndSchoolIdAndStatus(studentId, name, schoolId, status);
 	}
 	
 	//ADD

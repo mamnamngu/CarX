@@ -14,10 +14,9 @@ public class CustomWebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         WebMvcConfigurer.super.addCorsMappings(registry);
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5174")  // Specify the allowed origin(s)
+                .allowedOrigins("*")  // Specify the allowed origin(s)
                 .allowedMethods("*")  // Specify the allowed HTTP methods
                 .allowedHeaders("*")  // Specify the allowed request headers
                 .maxAge(3600);  // Specify the maximum age of the CORS preflight request
     }
-
 }

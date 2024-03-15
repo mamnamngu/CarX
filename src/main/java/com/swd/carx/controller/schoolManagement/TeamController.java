@@ -56,16 +56,17 @@ public class TeamController {
     }
 	
 	//Combined Query
-	@GetMapping("schoolTour/{schoolTourIdStr}/team/teamName/{teamName}/status/{statusStr}")
-	public ResponseEntity<List<TeamDTO>> retrieveTeam(@PathVariable String schoolTourIdStr, @PathVariable String teamName, @PathVariable String statusStr) {
+	@GetMapping("school/{schoolIdStr}/tournament/{tournamentIdStr}/team/teamName/{teamName}/status/{statusStr}")
+	public ResponseEntity<List<TeamDTO>> retrieveTeam(@PathVariable String schoolIdStr, @PathVariable String tournamentIdStr, @PathVariable String teamName, @PathVariable String statusStr) {
 		//Validation
 		if(teamName == null) teamName = "";
 		else teamName = teamName.toLowerCase().trim();
 		
-		Long schoolTourId = Constants.strToLong(schoolTourIdStr);
+		Integer schoolId = Constants.strToInt(schoolIdStr);
+		Long tournamentId = Constants.strToLong(tournamentIdStr);
 		Integer status =  Constants.strToInt(statusStr);
 		
-		List<Team> team = teamService.findByCombinedQuery(teamName, schoolTourId, status);
+		List<Team> team = teamService.findByCombinedQuery(teamName, schoolId, tournamentId, status);
 		return ResponseEntity.ok(teamService.display(team));
 	}
 	

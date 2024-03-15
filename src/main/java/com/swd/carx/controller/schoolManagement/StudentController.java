@@ -45,16 +45,17 @@ public class StudentController {
 	}
 	
 	//Combined Query
-	@GetMapping("school/{schoolIdStr}/student/name/{name}/status/{statusStr}")
-	public ResponseEntity<List<StudentDTO>> retrieveStudent(@PathVariable String schoolIdStr, @PathVariable String name, @PathVariable String statusStr) {
+	@GetMapping("school/{schoolIdStr}/student/{studentIdStr}/name/{name}/status/{statusStr}")
+	public ResponseEntity<List<StudentDTO>> retrieveStudent(@PathVariable String schoolIdStr, @PathVariable String studentIdStr, @PathVariable String name, @PathVariable String statusStr) {
 		//Validation
 		if(name== null) name = "";
 		else name = name.toLowerCase().trim();
 		
+		Long studentId = Constants.strToLong(studentIdStr);
 		Integer schoolId = Constants.strToInt(schoolIdStr);
 		Integer status =  Constants.strToInt(statusStr);
 		
-		List<Student> student = studentService.findByCombinedQuery(name, schoolId, status);
+		List<Student> student = studentService.findByCombinedQuery(studentId, name, schoolId, status);
 		return ResponseEntity.ok(studentService.display(student));
 	}
 	

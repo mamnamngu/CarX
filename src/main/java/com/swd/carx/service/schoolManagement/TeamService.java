@@ -37,10 +37,11 @@ public class TeamService {
 	}
 	
 	//Combined Query
-	public List<Team> findByCombinedQuery(String teamName, Long schoolTourId, Integer status) {
+	public List<Team> findByCombinedQuery(String teamName, Integer schoolId, Long tournamentId, Integer status) {
 		if(teamName != null) teamName = teamName.toLowerCase();
 //		if(status == null) status = Constants.DEFAULT_STATUS;
-		return teamRepo.findByTeamNameAndSchoolTourIdAndStatus(teamName, schoolTourId, status);
+		System.out.println("teamName: " + teamName);
+		return teamRepo.findByTeamNameAndSchoolTourIdAndStatus(teamName, schoolId, tournamentId, status);
 	}
 	
 	//ADD
@@ -77,7 +78,7 @@ public class TeamService {
 			
 			//School Tour
 			SchoolTour schoolTour = x.getSchoolTour();
-			y.setSchooTourId(schoolTour.getSchoolTourId());
+			y.setSchoolTourId(schoolTour.getSchoolTourId());
 			
 			//School
 			School school = schoolTour.getSchool();

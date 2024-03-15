@@ -25,7 +25,7 @@ public class TeamDTO {
 	private String statusTxt;
 	
 	//School Tour
-	private long schooTourId;
+	private long schoolTourId;
 	
 	//School
 	private int schoolId;

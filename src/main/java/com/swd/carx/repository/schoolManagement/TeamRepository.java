@@ -20,9 +20,10 @@ public interface TeamRepository extends JpaRepository<Team, Long>, JpaSpecificat
 	//ADMIN + School Assistant
 	//Combined query
 	@Query("SELECT e FROM Team e WHERE " +
-           "(:teamName IS NULL OR LOWER(e.teamName) LIKE LOWER(CONCAT('%', :teamName, '%'))) AND " +
-           "(:schoolTourId IS NULL OR e.schoolTour.schoolTourId = :schoolTourId) AND " +
+           "(:teamName IS NULL OR (LOWER(e.teamName) LIKE LOWER(CONCAT('%', :teamName, '%')) OR LOWER(e.description) LIKE LOWER(CONCAT('%', :teamName, '%')))) AND " +
+           "(:schoolId IS NULL OR e.schoolTour.school.schoolId = :schoolId) AND " +
+           "(:tournamentId IS NULL OR e.schoolTour.tournament.tournamentId = :tournamentId) AND " +
            "(:status IS NULL OR e.status = :status)")
-	public List<Team> findByTeamNameAndSchoolTourIdAndStatus(@Param("teamName") String teamName, @Param("schoolTourId") Long schoolTourId, @Param("status") Integer status);
+	public List<Team> findByTeamNameAndSchoolTourIdAndStatus(@Param("teamName") String teamName, @Param("schoolId") Integer schoolId, @Param("tournamentId") Long tournamentId, @Param("status") Integer status);
 
 }

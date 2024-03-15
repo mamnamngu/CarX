@@ -31,9 +31,9 @@ public class MemberService {
 	}
 	
 	//Admin filter
-	public List<Member> findByCombinedQuery(Long studentId, Long teamId, Long tournamentId, Integer status) {
+	public List<Member> findByCombinedQuery(Long studentId, Long teamId, Long tournamentId, Integer schoolId, Integer status) {
 //		if(status == null) status = Constants.DEFAULT_STATUS;
-		return memberRepo.findByStudentIdAndTournamentIdAndStatus(studentId, teamId, tournamentId, status);
+		return memberRepo.findByStudentIdAndTournamentIdAndStatus(studentId, teamId, tournamentId, schoolId, status);
 	}
 	
 	//ADD

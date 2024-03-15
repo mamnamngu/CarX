@@ -55,15 +55,16 @@ public class MemberController {
 	}
 	
 	//Combined Query
-	@GetMapping("student/{studentIdStr}/team/{teamIdStr}/tournament/{tournamentIdStr}/member/status/{statusStr}")
-	public ResponseEntity<List<MemberDTO>> retrieveMember(@PathVariable String studentIdStr, @PathVariable String teamIdStr, @PathVariable String tournamentIdStr, @PathVariable String statusStr) {
+	@GetMapping("student/{studentIdStr}/team/{teamIdStr}/tournament/{tournamentIdStr}/school/{schoolIdStr}/member/status/{statusStr}")
+	public ResponseEntity<List<MemberDTO>> retrieveMember(@PathVariable String studentIdStr, @PathVariable String teamIdStr, @PathVariable String tournamentIdStr, @PathVariable String schoolIdStr, @PathVariable String statusStr) {
 		//Validation
 		Long studentId = Constants.strToLong(studentIdStr);
 		Long teamId = Constants.strToLong(teamIdStr);
 		Long tournamentId = Constants.strToLong(tournamentIdStr);
+		Integer schoolId = Constants.strToInt(schoolIdStr);
 		Integer status =  Constants.strToInt(statusStr);
 		
-		List<Member> member = memberService.findByCombinedQuery(studentId, teamId, tournamentId, status);
+		List<Member> member = memberService.findByCombinedQuery(studentId, teamId, tournamentId, schoolId, status);
 		return ResponseEntity.ok(memberService.display(member));
 	}
 	
