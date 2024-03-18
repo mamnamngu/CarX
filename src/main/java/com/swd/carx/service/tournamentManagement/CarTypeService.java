@@ -30,7 +30,7 @@ public class CarTypeService {
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase();
 //		if(status == null) status = Constants.DEFAULT_STATUS;
-		return carTypeRepo.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseAndStatus(searchKey, searchKey, status);
+		return carTypeRepo.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseAndStatus(searchKey, status);
 	}
 	
 	//ADD

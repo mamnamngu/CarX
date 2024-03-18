@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.swd.carx.entity.schoolManagement.Team;
 import com.swd.carx.entity.tournamentManagement.CarInRace;
 import com.swd.carx.entity.tournamentManagement.Race;
+import com.swd.carx.entity.tournamentManagement.Round;
 import com.swd.carx.repository.tournamentManagement.CarInRaceRepository;
 import com.swd.carx.utilities.Constants;
 import com.swd.carx.view.CarInRaceDTO;
@@ -80,6 +81,8 @@ public class CarInRaceService {
 			Race race = x.getRace();
 			y.setRaceId(race.getRaceId());
 			
+			Round round = race.getRound();
+			y.setRaceNote(round.getTournament().getTournamentName() + " - " + round.getNote() + " - " +  race.getNote());			
 			list.add(y);
 		}
 		return list;

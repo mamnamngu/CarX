@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.swd.carx.entity.schoolManagement.Assistant;
 import com.swd.carx.entity.schoolManagement.School;
@@ -19,6 +20,7 @@ import com.swd.carx.service.schoolManagement.SchoolService;
 import com.swd.carx.utilities.Constants;
 import com.swd.carx.view.AssistantDTO;
 
+@RestController
 public class AssistantController {
 
 	@Autowired

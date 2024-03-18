@@ -30,7 +30,7 @@ public class LocationService {
 		if(searchKey == null) searchKey = "";
 		else searchKey = searchKey.toLowerCase();
 //		if(status == null) status = Constants.DEFAULT_STATUS;
-		return locationRepo.findByLocationNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseAndStatus(searchKey, searchKey, status);
+		return locationRepo.findByLocationNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseAndStatus(searchKey, status);
 	}
 	
 	//ADD

@@ -36,4 +36,5 @@ public class CarInRaceDTO {
 	
 	//Race
 	private long raceId;
+	private String raceNote;
 }
